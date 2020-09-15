@@ -28,7 +28,7 @@ fi
 DOCKERFILE=${PLUGIN_DOCKERFILE:-Dockerfile}
 CONTEXT=${PLUGIN_CONTEXT:-$PWD}
 LOG=${PLUGIN_LOG:-info}
-EXTRA_OPTS=""
+EXTRA_OPTS="--use-new-run=true"
 
 if [[ -n "${PLUGIN_TARGET:-}" ]]; then
     TARGET="--target=${PLUGIN_TARGET}"
@@ -67,13 +67,13 @@ if [[ "${PLUGIN_AUTO_TAG:-}" == "true" ]]; then
         major=$(echo "${TAG}" |awk -F'.' '{print $1}')
         minor=$(echo "${TAG}" |awk -F'.' '{print $2}')
         release=$(echo "${TAG}" |awk -F'.' '{print $3}')
-    
+
         major=${major:-0}
         minor=${minor:-0}
         release=${release:-0}
-    
+
         echo "${major},${major}.${minor},${major}.${minor}.${release},latest" > .tags
-    fi  
+    fi
 fi
 
 if [ -n "${PLUGIN_TAGS:-}" ]; then
